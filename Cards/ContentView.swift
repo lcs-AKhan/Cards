@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     
-    
+    @State private var cardShowing: Float = 0
     
     var body: some View {
         
@@ -18,6 +18,16 @@ struct ContentView: View {
             ZStack {
                 LinearGradient(gradient: Gradient(colors: [.green, .white, .green]), startPoint: .top, endPoint: .bottom)
                             .edgesIgnoringSafeArea(.all)
+                Section {
+                    
+                    VStack {
+                        Text("Card \(cardShowing, specifier: "%.0f")")
+                                    .padding(.bottom)
+                        Slider(value: $cardShowing, in: 1...13, step: 1)
+                            .padding([.leading, .trailing])
+                    }
+                    
+                }
             }
         }
     }
