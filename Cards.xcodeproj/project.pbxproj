@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D96DDB9D25792E6700906CEB /* DeckOfCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96DDB9C25792E6600906CEB /* DeckOfCardsView.swift */; };
+		D96DDBA02579350500906CEB /* DrawnCardResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96DDB9F2579350500906CEB /* DrawnCardResponse.swift */; };
 		D9EBF2DD257555B900B1170C /* CardsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EBF2DC257555B900B1170C /* CardsApp.swift */; };
 		D9EBF2DF257555B900B1170C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EBF2DE257555B900B1170C /* ContentView.swift */; };
 		D9EBF2E1257555BC00B1170C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9EBF2E0257555BC00B1170C /* Assets.xcassets */; };
@@ -14,6 +16,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D96DDB9C25792E6600906CEB /* DeckOfCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckOfCardsView.swift; sourceTree = "<group>"; };
+		D96DDB9F2579350500906CEB /* DrawnCardResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawnCardResponse.swift; sourceTree = "<group>"; };
 		D9EBF2D9257555B900B1170C /* Cards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cards.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9EBF2DC257555B900B1170C /* CardsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsApp.swift; sourceTree = "<group>"; };
 		D9EBF2DE257555B900B1170C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -57,6 +61,8 @@
 				D9EBF2E0257555BC00B1170C /* Assets.xcassets */,
 				D9EBF2E5257555BC00B1170C /* Info.plist */,
 				D9EBF2E2257555BC00B1170C /* Preview Content */,
+				D96DDB9C25792E6600906CEB /* DeckOfCardsView.swift */,
+				D96DDB9F2579350500906CEB /* DrawnCardResponse.swift */,
 			);
 			path = Cards;
 			sourceTree = "<group>";
@@ -139,7 +145,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9EBF2DF257555B900B1170C /* ContentView.swift in Sources */,
+				D96DDB9D25792E6700906CEB /* DeckOfCardsView.swift in Sources */,
 				D9EBF2DD257555B900B1170C /* CardsApp.swift in Sources */,
+				D96DDBA02579350500906CEB /* DrawnCardResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
