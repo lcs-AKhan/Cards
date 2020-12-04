@@ -12,7 +12,6 @@ struct CardImage: Codable {
     var png: String
 }
 
-
 struct Card: Codable {
     var code: String
     var image: String
