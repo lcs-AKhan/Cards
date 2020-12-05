@@ -5,7 +5,12 @@
 //  Created by Abdul Ahad Khan on 2020-12-03.
 //
 
-import Foundation
+import SwiftUI
+
+struct RetrievedCard: Identifiable {
+    var id = UUID()
+    var image: UIImage
+}
 
 struct CardImage: Codable {
     var svg: String

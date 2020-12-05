@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
         
     @State private var deck_id = ""
-    @State private var cardImages = [UIImage]()
+    @State private var cardImages = [RetrievedCard]()
     @State var cardImage = UIImage()
     
     var body: some View {
@@ -23,7 +23,11 @@ struct ContentView: View {
                 
                 
                     VStack {
-                        Image(uiImage: cardImage)
+                        HStack {
+                            ForEach(cardImages) { card in
+                                Image(uiImage: card.image)
+                            }
+                        }
                         Button(action: {
                             fetchDeck()
                         }) {
@@ -153,6 +157,7 @@ struct ContentView: View {
                     
                     // Set the image loaded from the server so that it shows in the user interface
                     cardImage = loadedCard
+                    cardImages.append(RetrievedCard(image: cardImage))
                 }
                 
             }.resume()
