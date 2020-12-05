@@ -21,10 +21,9 @@ struct ContentView: View {
                 LinearGradient(gradient: Gradient(colors: [.green, .white, .green]), startPoint: .top, endPoint: .bottom)
                             .edgesIgnoringSafeArea(.all)
                 
-                Section {
-                    Image(uiImage: cardImage)
-                    }
+                
                     VStack {
+                        Image(uiImage: cardImage)
                         Button(action: {
                             fetchDeck()
                         }) {
@@ -104,12 +103,17 @@ struct ContentView: View {
                 
                 // Now decode from JSON into an array of Swift native data types
                 if let decodedCardData = try? JSONDecoder().decode(DrawnCardResponse.self, from: cardData) {
-
-                    print("Doggie data decoded from JSON successfully")
-                    print("Images are: \(decodedCardData.cards)")
                     
-                    // Now fetch the image at the address we were given
-                    //fetchImage(from: cardData.message)
+                    print("Decoded... contents are")
+                    print(decodedCardData.cards.first!.image)
+
+//                    print("Doggie data decoded from JSON successfully")
+//                    print("Images are: \(decodedCardData.cards)")
+//
+//                    // Now fetch the image at the address we were given
+//                    //fetchImage(from: cardData.message)
+//
+                     fetchImage(adress: decodedCardData.cards.first!.image)
                     
                 } else {
 

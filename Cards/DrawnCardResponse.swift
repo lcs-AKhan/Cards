@@ -27,3 +27,10 @@ struct DrawnCardResponse: Codable {
     var cards: [Card]
     var remaining: Int
 }
+//
+//struct DrawnCardResponse: Codable {
+//    var success: Bool
+//    var deck_id: String
+//    var cards: [Card]
+//    var remaining: Int
+//}
