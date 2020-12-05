@@ -9,6 +9,10 @@ import SwiftUI
 
 struct ContentView: View {
         
+    @State private var deck_id = ""
+    @State private var cardImages = [UIImage]()
+    @State var cardImage = UIImage()
+    
     var body: some View {
         
         NavigationView() {
@@ -18,7 +22,7 @@ struct ContentView: View {
                             .edgesIgnoringSafeArea(.all)
                 
                 Section {
-                    
+                    Image(uiImage: cardImage)
                     }
                     VStack {
                         Button(action: {
@@ -26,7 +30,11 @@ struct ContentView: View {
                         }) {
                             Text("Get a new deck")
                         }
-                        
+                        Button(action: {
+                            drawCard()
+                        }) {
+                            Text("Draw Card")
+                        }
                 }
             }
         }
@@ -58,9 +66,9 @@ struct ContentView: View {
                 if let decodedDeckData = try? JSONDecoder().decode(Deck.self, from: deckData) {
 
                     print("Deck data decoded from JSON successfully")
-                    print("URL is: \(decodedDeckData.deck_id)")
+                    print("Id is: \(decodedDeckData.deck_id)")
                     
-                    drawCard(deck_id: decodedDeckData.deck_id)
+                    deck_id = decodedDeckData.deck_id
                     
                 } else {
 
@@ -68,13 +76,13 @@ struct ContentView: View {
                 }
                 
             }.resume()
-            
+        
         }
     
-    func drawCard(deck_id: String) {
+    func drawCard() {
             
             // 1. Prepare a URLRequest to send our encoded data as JSON
-        let url = URL(string: "https://deckofcardsapi.com/api/deck/\(deck_id)/draw/?count=2")!
+        let url = URL(string: "https://deckofcardsapi.com/api/deck/\(deck_id)/draw/?count=1")!
             var request = URLRequest(url: url)
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.httpMethod = "GET"
@@ -97,13 +105,50 @@ struct ContentView: View {
                 // Now decode from JSON into an array of Swift native data types
                 if let decodedCardData = try? JSONDecoder().decode(DrawnCardResponse.self, from: cardData) {
 
-                    print("Card data decoded from JSON successfully")
-                    print("URL is: \(decodedCardData.cards)")
+                    print("Doggie data decoded from JSON successfully")
+                    print("Images are: \(decodedCardData.cards)")
                     
+                    // Now fetch the image at the address we were given
+                    //fetchImage(from: cardData.message)
                     
                 } else {
 
                     print("Invalid response from server.")
+                }
+                
+            }.resume()
+            
+        }
+    func fetchImage(adress: String) {
+
+            // 1. Prepare a URL that points to the image to be leaded
+            let url = URL(string: adress)!
+            
+            // 2. Run the request and process the response
+            URLSession.shared.dataTask(with: url) { data, response, error in
+                
+                // handle the result here – attempt to unwrap optional data provided by task
+                guard let imageData = data else {
+                    
+                    // Show the error message
+                    print("No data in response: \(error?.localizedDescription ?? "Unknown error")")
+                    
+                    return
+                }
+                
+                // Update the UI on the main thread
+                DispatchQueue.main.async {
+                                        
+                    // Attempt to create an instance of UIImage using the data from the server
+                    guard let loadedCard = UIImage(data: imageData) else {
+                        
+                        // If we could not load the image from the server, show a default image
+                        cardImage = UIImage(named: "Example")!
+                        return
+                    }
+                    
+                    // Set the image loaded from the server so that it shows in the user interface
+                    cardImage = loadedCard
                 }
                 
             }.resume()
