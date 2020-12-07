@@ -26,6 +26,8 @@ struct ContentView: View {
                         HStack {
                             ForEach(cardImages) { card in
                                 Image(uiImage: card.image)
+                                    .resizable()
+                                    .frame(width: 90, height: 135)
                             }
                         }
                         Button(action: {
