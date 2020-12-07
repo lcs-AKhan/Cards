@@ -26,7 +26,6 @@ struct ContentView: View {
                 LinearGradient(gradient: Gradient(colors: [.green, .white, .green]), startPoint: .top, endPoint: .bottom)
                             .edgesIgnoringSafeArea(.all)
                 
-                
                     VStack {
                         HStack {
                             ForEach(cardImagesBot) { card in
@@ -34,6 +33,11 @@ struct ContentView: View {
                                     .resizable()
                                     .frame(width: 90, height: 135)
                             }
+                        }
+                        if yourTurn {
+                            Text("Your Turn")
+                        } else {
+                            Text("Dealer's Turn")
                         }
                         HStack {
                             ForEach(cardImages) { card in
