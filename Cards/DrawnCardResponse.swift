@@ -12,6 +12,11 @@ struct RetrievedCard: Identifiable {
     var image: UIImage
 }
 
+struct RetrievedCardBot: Identifiable {
+    var id = UUID()
+    var image: UIImage
+}
+
 struct CardImage: Codable {
     var svg: String
     var png: String
