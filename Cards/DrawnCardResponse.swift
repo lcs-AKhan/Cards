@@ -10,11 +10,13 @@ import SwiftUI
 struct RetrievedCard: Identifiable {
     var id = UUID()
     var image: UIImage
+    var value: String
 }
 
 struct RetrievedCardBot: Identifiable {
     var id = UUID()
     var image: UIImage
+    var value: String
 }
 
 struct CardImage: Codable {

@@ -9,12 +9,17 @@ import SwiftUI
 
 struct ContentView: View {
         
+    @State private var gotNewDeck = false
+    
     @State private var deck_id = ""
     @State private var cardImages = [RetrievedCard]()
     @State var cardImage = UIImage()
     
-    @State var cardImagesBot = [RetrievedCardBot]()
-    @State var cardImageBot = UIImage()
+    @State private var cardImagesBot = [RetrievedCardBot]()
+    @State private var cardImageBot = UIImage()
+    
+    @State private var dealerHandValue: Int = 0
+    @State private var playerHandValue: Int = 0
     
     @State var yourTurn: Bool = true
     
@@ -51,10 +56,13 @@ struct ContentView: View {
                         }) {
                             Text("Hit Me")
                         }
-                        Button(action: {
-                            fetchDeck()
-                        }) {
-                            Text("Get a new deck")
+                        Text("Your hand value is \(playerHandValue)")
+                        if gotNewDeck == false {
+                            Button(action: {
+                                fetchDeck()
+                            }) {
+                                Text("Get a new deck")
+                            }
                         }
                 }
             }
@@ -135,8 +143,7 @@ struct ContentView: View {
 //                    // Now fetch the image at the address we were given
 //                    //fetchImage(from: cardData.message)
 //
-                     fetchImage(adress: decodedCardData.cards.first!.image)
-                    
+                    fetchImage(adress: decodedCardData.cards.first!.image, value:     decodedCardData.cards.first!.value)
                 } else {
 
                     print("Invalid response from server.")
@@ -146,7 +153,7 @@ struct ContentView: View {
             }.resume()
             
         }
-    func fetchImage(adress: String) {
+    func fetchImage(adress: String, value: String) {
 
             // 1. Prepare a URL that points to the image to be leaded
             let url = URL(string: adress)!
@@ -176,7 +183,9 @@ struct ContentView: View {
                     
                     // Set the image loaded from the server so that it shows in the user interface
                     cardImage = loadedCard
-                    cardImages.append(RetrievedCard(image: cardImage))
+                    cardImages.append(RetrievedCard(image: cardImage, value: value))
+                    findValuePlayer(value: value)
+                    playerHandValue += Int(value) ?? 0
                 }
                 
             }.resume()
@@ -218,7 +227,7 @@ struct ContentView: View {
 //                    // Now fetch the image at the address we were given
 //                    //fetchImage(from: cardData.message)
 //
-                     fetchImageBot(adress2: decodedCardData2.cards.first!.image)
+                    fetchImageBot(adress2: decodedCardData2.cards.first!.image, value2: decodedCardData2.cards.first!.value)
                     
                 } else {
 
@@ -228,7 +237,7 @@ struct ContentView: View {
             }.resume()
             
         }
-    func fetchImageBot(adress2: String) {
+    func fetchImageBot(adress2: String, value2: String) {
 
             // 1. Prepare a URL that points to the image to be leaded
             let url = URL(string: adress2)!
@@ -258,12 +267,32 @@ struct ContentView: View {
                     
                     // Set the image loaded from the server so that it shows in the user interface
                     cardImageBot = loadedCard2
-                    cardImagesBot.append(RetrievedCardBot(image: cardImageBot))
+                    cardImagesBot.append(RetrievedCardBot(image: cardImageBot, value: value2))
+                    findValueDealer(value2: value2)
+                    dealerHandValue += Int(value2) ?? 0
                 }
                 yourTurn = true
             }.resume()
             
         }
+    func findValuePlayer(value: String) {
+        if value == "KING" {
+            playerHandValue += 10
+        } else if value == "QUEEN" {
+            playerHandValue += 10
+        } else if value == "JACK" {
+            playerHandValue += 10
+        }
+    }
+    func findValueDealer(value2: String) {
+        if value2 == "KING" {
+            playerHandValue += 10
+        } else if value2 == "QUEEN" {
+            playerHandValue += 10
+        } else if value2 == "JACK" {
+            playerHandValue += 10
+        }
+    }
 }
 
 
