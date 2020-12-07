@@ -47,22 +47,14 @@ struct ContentView: View {
                             }
                         }
                         Button(action: {
+                            drawCard()
+                        }) {
+                            Text("Hit Me")
+                        }
+                        Button(action: {
                             fetchDeck()
                         }) {
                             Text("Get a new deck")
-                        }
-                        if yourTurn {
-                            Button(action: {
-                                drawCard()
-                            }) {
-                                Text("Hit")
-                            }
-                        } else {
-                            Button(action: {
-                                drawCardBot()
-                            }) {
-                                Text("Hit for the bot")
-                            }
                         }
                 }
             }
@@ -150,6 +142,7 @@ struct ContentView: View {
                     print("Invalid response from server.")
                 }
                 yourTurn = false
+                drawCardBot()
             }.resume()
             
         }
@@ -202,7 +195,7 @@ struct ContentView: View {
             URLSession.shared.dataTask(with: request) { data, response, error in
                 
                 // handle the result here – attempt to unwrap optional data provided by task
-                guard let cardData = data else {
+                guard let cardDataDealer = data else {
                     
                     // Show the error message
                     print("No data in response: \(error?.localizedDescription ?? "Unknown error")")
@@ -211,13 +204,13 @@ struct ContentView: View {
                 }
                 
                 // It seems to have worked? Let's see what we have
-                print(String(data: cardData, encoding: .utf8)!)
+                print(String(data: cardDataDealer, encoding: .utf8)!)
                 
                 // Now decode from JSON into an array of Swift native data types
-                if let decodedCardData = try? JSONDecoder().decode(DrawnCardResponse.self, from: cardData) {
+                if let decodedCardData2 = try? JSONDecoder().decode(DrawnCardResponse.self, from: cardDataDealer) {
                     
                     print("Decoded... contents are")
-                    print(decodedCardData.cards.first!.image)
+                    print(decodedCardData2.cards.first!.image)
 
 //                    print("Doggie data decoded from JSON successfully")
 //                    print("Images are: \(decodedCardData.cards)")
@@ -225,7 +218,7 @@ struct ContentView: View {
 //                    // Now fetch the image at the address we were given
 //                    //fetchImage(from: cardData.message)
 //
-                     fetchImageBot(adress: decodedCardData.cards.first!.image)
+                     fetchImageBot(adress2: decodedCardData2.cards.first!.image)
                     
                 } else {
 
@@ -235,16 +228,16 @@ struct ContentView: View {
             }.resume()
             
         }
-    func fetchImageBot(adress: String) {
+    func fetchImageBot(adress2: String) {
 
             // 1. Prepare a URL that points to the image to be leaded
-            let url = URL(string: adress)!
+            let url = URL(string: adress2)!
             
             // 2. Run the request and process the response
             URLSession.shared.dataTask(with: url) { data, response, error in
                 
                 // handle the result here – attempt to unwrap optional data provided by task
-                guard let imageData = data else {
+                guard let imageData2 = data else {
                     
                     // Show the error message
                     print("No data in response: \(error?.localizedDescription ?? "Unknown error")")
@@ -256,22 +249,21 @@ struct ContentView: View {
                 DispatchQueue.main.async {
                                         
                     // Attempt to create an instance of UIImage using the data from the server
-                    guard let loadedCard = UIImage(data: imageData) else {
+                    guard let loadedCard2 = UIImage(data: imageData2) else {
                         
                         // If we could not load the image from the server, show a default image
-                        cardImageBot = UIImage(named: "Example")!
+                        cardImageBot = UIImage(named: "Example2")!
                         return
                     }
                     
                     // Set the image loaded from the server so that it shows in the user interface
-                    cardImageBot = loadedCard
-                    cardImagesBot.append(RetrievedCardBot(image: cardImage))
+                    cardImageBot = loadedCard2
+                    cardImagesBot.append(RetrievedCardBot(image: cardImageBot))
                 }
                 yourTurn = true
             }.resume()
             
         }
-
 }
 
 
