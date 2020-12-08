@@ -52,12 +52,16 @@ struct ContentView: View {
                         
                         DealtCardsView(cardImages: cardImages)
                             
+                    if gameEnded == false {
                         Button(action: {
                             drawCard()
                         }) {
                             Text("Hit Me")
                         }
+                    }
+                    
                         Text("Your hand value is \(playerHandValue)")
+                    
                         if gotNewDeck == false {
                             Button(action: {
                                 fetchDeck()
@@ -65,6 +69,7 @@ struct ContentView: View {
                                 Text("Play BlackJack!")
                             }
                         }
+                    
                         if gameEnded {
                             Button(action: {
                                 GameRestart()
@@ -72,6 +77,7 @@ struct ContentView: View {
                                 Text("Play Again?")
                             }
                         }
+                    
                     }
                 }
             }
@@ -309,6 +315,7 @@ struct ContentView: View {
             dealerStatus = "Dealer's Turn"
         }
     }
+    
     func GameRestart() {
         cardImages = [RetrievedCard]()
         cardImagesBot = [RetrievedCardBot]()
@@ -316,7 +323,11 @@ struct ContentView: View {
         playerHandValue = 0
         deck_id = ""
         fetchDeck()
+        gameEnded = false
+        yourStatus = ""
+        dealerStatus = ""
     }
+    
 }
 
 
