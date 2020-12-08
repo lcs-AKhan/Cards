@@ -26,6 +26,8 @@ struct ContentView: View {
     
     @State var yourTurn: Bool = true
     
+    @State var gameEnded = false
+    
     var body: some View {
         
         NavigationView {
@@ -60,7 +62,14 @@ struct ContentView: View {
                             Button(action: {
                                 fetchDeck()
                             }) {
-                                Text("Get a new deck")
+                                Text("Play BlackJack!")
+                            }
+                        }
+                        if gameEnded {
+                            Button(action: {
+                                GameRestart()
+                            }) {
+                                Text("Play Again?")
                             }
                         }
                     }
@@ -218,12 +227,6 @@ struct ContentView: View {
                 print("Decoded... contents are")
                 print(decodedCardData2.cards.first!.image)
                 
-                //                    print("Doggie data decoded from JSON successfully")
-                //                    print("Images are: \(decodedCardData.cards)")
-                //
-                //                    // Now fetch the image at the address we were given
-                //                    //fetchImage(from: cardData.message)
-                //
                 fetchImageBot(adress2: decodedCardData2.cards.first!.image, value2: decodedCardData2.cards.first!.value)
                 
             } else {
@@ -297,12 +300,22 @@ struct ContentView: View {
     func checkForBust() {
         if dealerHandValue > 21 {
             dealerStatus = "Dealer Busted!"
+            gameEnded = true
         } else if playerHandValue > 21 {
             yourStatus = "You Busted!"
+            gameEnded = true
         } else if playerHandValue < 21 {
             yourStatus = "Your Turn"
             dealerStatus = "Dealer's Turn"
         }
+    }
+    func GameRestart() {
+        cardImages = [RetrievedCard]()
+        cardImagesBot = [RetrievedCardBot]()
+        dealerHandValue = 0
+        playerHandValue = 0
+        deck_id = ""
+        fetchDeck()
     }
 }
 
