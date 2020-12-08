@@ -53,10 +53,17 @@ struct ContentView: View {
                         DealtCardsView(cardImages: cardImages)
                             
                     if gameEnded == false {
-                        Button(action: {
-                            drawCard()
-                        }) {
-                            Text("Hit Me")
+                        HStack {
+                            Button(action: {
+                                drawCard()
+                            }) {
+                                Text("Hit Me")
+                            }
+                            Button(action: {
+                                Stand()
+                            }) {
+                                Text("Stand")
+                            }
                         }
                     }
                     
@@ -328,6 +335,10 @@ struct ContentView: View {
         dealerStatus = ""
     }
     
+    func Stand() {
+        yourTurn = false
+        drawCardBot()
+    }
 }
 
 
