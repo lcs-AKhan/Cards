@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D963CC3F25800F47000A498C /* DealtCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D963CC3E25800F47000A498C /* DealtCardsView.swift */; };
+		D963CC422580127C000A498C /* DealtCardsDealerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D963CC412580127C000A498C /* DealtCardsDealerView.swift */; };
 		D96DDB9D25792E6700906CEB /* DeckOfCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96DDB9C25792E6600906CEB /* DeckOfCardsView.swift */; };
 		D96DDBA02579350500906CEB /* DrawnCardResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96DDB9F2579350500906CEB /* DrawnCardResponse.swift */; };
 		D9EBF2DD257555B900B1170C /* CardsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EBF2DC257555B900B1170C /* CardsApp.swift */; };
@@ -16,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D963CC3E25800F47000A498C /* DealtCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealtCardsView.swift; sourceTree = "<group>"; };
+		D963CC412580127C000A498C /* DealtCardsDealerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealtCardsDealerView.swift; sourceTree = "<group>"; };
 		D96DDB9C25792E6600906CEB /* DeckOfCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckOfCardsView.swift; sourceTree = "<group>"; };
 		D96DDB9F2579350500906CEB /* DrawnCardResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawnCardResponse.swift; sourceTree = "<group>"; };
 		D9EBF2D9257555B900B1170C /* Cards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cards.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -63,6 +67,8 @@
 				D9EBF2E2257555BC00B1170C /* Preview Content */,
 				D96DDB9C25792E6600906CEB /* DeckOfCardsView.swift */,
 				D96DDB9F2579350500906CEB /* DrawnCardResponse.swift */,
+				D963CC3E25800F47000A498C /* DealtCardsView.swift */,
+				D963CC412580127C000A498C /* DealtCardsDealerView.swift */,
 			);
 			path = Cards;
 			sourceTree = "<group>";
@@ -146,6 +152,8 @@
 			files = (
 				D9EBF2DF257555B900B1170C /* ContentView.swift in Sources */,
 				D96DDB9D25792E6700906CEB /* DeckOfCardsView.swift in Sources */,
+				D963CC422580127C000A498C /* DealtCardsDealerView.swift in Sources */,
+				D963CC3F25800F47000A498C /* DealtCardsView.swift in Sources */,
 				D9EBF2DD257555B900B1170C /* CardsApp.swift in Sources */,
 				D96DDBA02579350500906CEB /* DrawnCardResponse.swift in Sources */,
 			);
