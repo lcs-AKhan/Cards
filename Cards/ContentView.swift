@@ -151,7 +151,7 @@ struct ContentView: View {
         }.resume()
         
     }
-    
+
     func drawCard() {
         
         // 1. Prepare a URLRequest to send our encoded data as JSON
@@ -182,13 +182,19 @@ struct ContentView: View {
                 print(decodedCardData.cards.first!.image)
                 
                 fetchImage(adress: decodedCardData.cards.first!.image, value:     decodedCardData.cards.first!.value)
+                
             } else {
                 
                 print("Invalid response from server.")
             }
             yourTurn = false
             checkForBust()
-            drawCardBot()
+            if playerHandValue < 21 {
+                if dealerHandValue < 17 {
+                    drawCardBot()
+                }
+            }
+            checkForWinner()
         }.resume()
         
     }
@@ -268,6 +274,7 @@ struct ContentView: View {
                 print("Invalid response from server.")
             }
             checkForBust()
+            checkForWinner()
         }.resume()
         
     }
@@ -336,7 +343,7 @@ struct ContentView: View {
     }
     
     func checkForBust() {
-        if dealerHandValue > 21 {
+        if dealerHandValue > 14 {
             dealerStatus = "Dealer Busted!"
             yourStatus = "Dealer Busted!"
             gameEnded = true
@@ -347,6 +354,20 @@ struct ContentView: View {
         } else if playerHandValue < 21, dealerHandValue < 21 {
             yourStatus = "Your Turn"
             dealerStatus = "Dealer's Turn"
+        }
+    }
+    
+    func checkForWinner() {
+        if dealerHandValue > 17 {
+            if playerStands {
+                if (21 - dealerHandValue) < ( 21 - playerHandValue) {
+                    dealerStatus = "Dealer Wins!"
+                    gameEnded = true
+                } else {
+                    yourStatus = "You Win!"
+                    gameEnded = true
+                }
+            }
         }
     }
     
@@ -366,8 +387,11 @@ struct ContentView: View {
     func Stand() {
         yourTurn = false
         playerStands = true
-        drawCardBot()
+        if dealerHandValue < 18 {
+            drawCardBot()
+        }
     }
+    
 }
 
 
