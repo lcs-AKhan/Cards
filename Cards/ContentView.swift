@@ -40,6 +40,8 @@ struct ContentView: View {
                 
                 VStack {
                     
+                    // Display the cards info for both dealer and player
+                    
                     Text("Dealer's hand value is \(dealerHandValue)")
                     
                     DealtCardsDealerView(cardImagesBot: cardImagesBot)
@@ -56,6 +58,8 @@ struct ContentView: View {
                         
                     DealtCardsView(cardImages: cardImages)
                             
+                    // Buttons for standing and hitting
+                    
                     if gameEnded == false {
                         HStack {
                             if playerStands {
@@ -87,6 +91,8 @@ struct ContentView: View {
                     
                         Text("Your hand value is \(playerHandValue)")
                     
+                        // Buttons for playing a game
+                    
                         if gotNewDeck == false {
                             Button(action: {
                                 fetchDeck()
@@ -111,6 +117,7 @@ struct ContentView: View {
             }
         }
     
+    // functions
     
     func fetchDeck() {
         
@@ -190,7 +197,7 @@ struct ContentView: View {
             yourTurn = false
             checkForBust()
             if playerHandValue < 21 {
-                if dealerHandValue < 17 {
+                if dealerHandValue < 21 {
                     drawCardBot()
                 }
             }
@@ -338,27 +345,28 @@ struct ContentView: View {
         } else if value2 == "JACK" {
             dealerHandValue += 10
         } else if value2 == "ACE" {
-            dealerHandValue += 10
+            dealerHandValue += 11
         }
     }
     
     func checkForBust() {
-        if dealerHandValue > 14 {
+        if dealerHandValue > 21 {
             dealerStatus = "Dealer Busted!"
             yourStatus = "Dealer Busted!"
             gameEnded = true
-        } else if playerHandValue > 21 {
+        } else if playerHandValue > 17 {
             yourStatus = "You Busted!"
             dealerStatus = "You Busted!"
             gameEnded = true
-        } else if playerHandValue < 21, dealerHandValue < 21 {
+        } else if playerHandValue <= 21 {
             yourStatus = "Your Turn"
+        } else {
             dealerStatus = "Dealer's Turn"
         }
     }
     
     func checkForWinner() {
-        if dealerHandValue > 17 {
+        if dealerHandValue > 14 {
             if playerStands {
                 if (21 - dealerHandValue) < ( 21 - playerHandValue) {
                     dealerStatus = "Dealer Wins!"
@@ -389,6 +397,8 @@ struct ContentView: View {
         playerStands = true
         if dealerHandValue < 18 {
             drawCardBot()
+        } else {
+            checkForWinner()
         }
     }
     
