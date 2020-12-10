@@ -13,6 +13,8 @@ struct MainMenuView: View {
     
     @State var deck_id: String = ""
     
+    @State var playAGame: Bool = false
+    
     var body: some View {
         
         NavigationView() {
@@ -28,8 +30,15 @@ struct MainMenuView: View {
                         .fontWeight(.regular)
                         .multilineTextAlignment(.center)
                     
-                    NavigationLink(destination: ContentView(gotNewDeck: $gotNewDeck, deck_id: $deck_id)) {
-                        Text("Play")
+
+                    NavigationLink(destination: ContentView(gotNewDeck: $gotNewDeck, deck_id: $deck_id), isActive: $playAGame) {
+                        Button(action: {
+                            playAGame = true
+                        }) {
+                            Image("button_play-blackjack")
+                                .resizable()
+                                .scaledToFit()
+                        }
                     }
                     
                 }

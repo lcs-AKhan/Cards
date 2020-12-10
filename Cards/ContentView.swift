@@ -160,50 +160,56 @@ struct ContentView: View {
     }
 
     func drawCard() {
-        
-        // 1. Prepare a URLRequest to send our encoded data as JSON
-        let url = URL(string: "https://deckofcardsapi.com/api/deck/\(deck_id)/draw/?count=1")!
-        var request = URLRequest(url: url)
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpMethod = "GET"
-        
-        // 2. Run the request and process the response
-        URLSession.shared.dataTask(with: request) { data, response, error in
+        checkForBust()
+        checkForWinner()
+        if gameEnded == false {
+            // 1. Prepare a URLRequest to send our encoded data as JSON
+            let url = URL(string: "https://deckofcardsapi.com/api/deck/\(deck_id)/draw/?count=1")!
+            var request = URLRequest(url: url)
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpMethod = "GET"
             
-            // handle the result here – attempt to unwrap optional data provided by task
-            guard let cardData = data else {
+            // 2. Run the request and process the response
+            URLSession.shared.dataTask(with: request) { data, response, error in
                 
-                // Show the error message
-                print("No data in response: \(error?.localizedDescription ?? "Unknown error")")
-                
-                return
-            }
-            
-            // It seems to have worked? Let's see what we have
-            print(String(data: cardData, encoding: .utf8)!)
-            
-            // Now decode from JSON into an array of Swift native data types
-            if let decodedCardData = try? JSONDecoder().decode(DrawnCardResponse.self, from: cardData) {
-                
-                print("Decoded... contents are")
-                print(decodedCardData.cards.first!.image)
-                
-                fetchImage(adress: decodedCardData.cards.first!.image, value:     decodedCardData.cards.first!.value)
-                
-            } else {
-                
-                print("Invalid response from server.")
-            }
-            yourTurn = false
-            checkForBust()
-            if playerHandValue < 21 {
-                if dealerHandValue < 21 {
-                    drawCardBot()
+                // handle the result here – attempt to unwrap optional data provided by task
+                guard let cardData = data else {
+                    
+                    // Show the error message
+                    print("No data in response: \(error?.localizedDescription ?? "Unknown error")")
+                    
+                    return
                 }
-            }
+                
+                // It seems to have worked? Let's see what we have
+                print(String(data: cardData, encoding: .utf8)!)
+                
+                // Now decode from JSON into an array of Swift native data types
+                if let decodedCardData = try? JSONDecoder().decode(DrawnCardResponse.self, from: cardData) {
+                    
+                    print("Decoded... contents are")
+                    print(decodedCardData.cards.first!.image)
+                    
+                    fetchImage(adress: decodedCardData.cards.first!.image, value:     decodedCardData.cards.first!.value)
+                    
+                } else {
+                    
+                    print("Invalid response from server.")
+                }
+                yourTurn = false
+                if playerHandValue <= 21 {
+                    if dealerHandValue <= 17 {
+                        drawCardBot()
+                    } else {
+                        DealerStand()
+                    }
+                } else {
+                    checkForBust()
+                }
+                checkForBust()
+            }.resume()
             checkForWinner()
-        }.resume()
-        
+        }
     }
     
     func fetchImage(adress: String, value: String) {
@@ -246,44 +252,47 @@ struct ContentView: View {
     }
     
     func drawCardBot() {
+        checkForBust()
+        checkForWinner()
         
-        // 1. Prepare a URLRequest to send our encoded data as JSON
-        let url = URL(string: "https://deckofcardsapi.com/api/deck/\(deck_id)/draw/?count=1")!
-        var request = URLRequest(url: url)
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpMethod = "GET"
-        
-        // 2. Run the request and process the response
-        URLSession.shared.dataTask(with: request) { data, response, error in
+        if gameEnded == false {
+            // 1. Prepare a URLRequest to send our encoded data as JSON
+            let url = URL(string: "https://deckofcardsapi.com/api/deck/\(deck_id)/draw/?count=1")!
+            var request = URLRequest(url: url)
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpMethod = "GET"
             
-            // handle the result here – attempt to unwrap optional data provided by task
-            guard let cardDataDealer = data else {
+            // 2. Run the request and process the response
+            URLSession.shared.dataTask(with: request) { data, response, error in
                 
-                // Show the error message
-                print("No data in response: \(error?.localizedDescription ?? "Unknown error")")
+                // handle the result here – attempt to unwrap optional data provided by task
+                guard let cardDataDealer = data else {
+                    
+                    // Show the error message
+                    print("No data in response: \(error?.localizedDescription ?? "Unknown error")")
+                    
+                    return
+                }
                 
-                return
-            }
-            
-            // It seems to have worked? Let's see what we have
-            print(String(data: cardDataDealer, encoding: .utf8)!)
-            
-            // Now decode from JSON into an array of Swift native data types
-            if let decodedCardData2 = try? JSONDecoder().decode(DrawnCardResponse.self, from: cardDataDealer) {
+                // It seems to have worked? Let's see what we have
+                print(String(data: cardDataDealer, encoding: .utf8)!)
                 
-                print("Decoded... contents are")
-                print(decodedCardData2.cards.first!.image)
-                
-                fetchImageBot(adress2: decodedCardData2.cards.first!.image, value2: decodedCardData2.cards.first!.value)
-                
-            } else {
-                
-                print("Invalid response from server.")
-            }
-            checkForBust()
-            checkForWinner()
-        }.resume()
-        
+                // Now decode from JSON into an array of Swift native data types
+                if let decodedCardData2 = try? JSONDecoder().decode(DrawnCardResponse.self, from: cardDataDealer) {
+                    
+                    print("Decoded... contents are")
+                    print(decodedCardData2.cards.first!.image)
+                    
+                    fetchImageBot(adress2: decodedCardData2.cards.first!.image, value2: decodedCardData2.cards.first!.value)
+                    
+                } else {
+                    
+                    print("Invalid response from server.")
+                }
+                checkForBust()
+                checkForWinner()
+            }.resume()
+        }
     }
     
     func fetchImageBot(adress2: String, value2: String) {
@@ -354,11 +363,11 @@ struct ContentView: View {
             dealerStatus = "Dealer Busted!"
             yourStatus = "Dealer Busted!"
             gameEnded = true
-        } else if playerHandValue > 17 {
+        } else if playerHandValue > 21 {
             yourStatus = "You Busted!"
             dealerStatus = "You Busted!"
             gameEnded = true
-        } else if playerHandValue <= 21 {
+        } else if playerHandValue <= 17 {
             yourStatus = "Your Turn"
         } else {
             dealerStatus = "Dealer's Turn"
@@ -370,10 +379,15 @@ struct ContentView: View {
             if playerStands {
                 if (21 - dealerHandValue) < ( 21 - playerHandValue) {
                     dealerStatus = "Dealer Wins!"
+                    yourStatus = "Dealer Wins!"
+                    gameEnded = true
+                } else if (21 - dealerHandValue) > (21 - playerHandValue) {
+                    yourStatus = "You Win!"
+                    dealerStatus = "You Win!"
                     gameEnded = true
                 } else {
-                    yourStatus = "You Win!"
-                    gameEnded = true
+                    yourStatus = "Tie"
+                    dealerStatus = "Tie"
                 }
             }
         }
@@ -400,6 +414,12 @@ struct ContentView: View {
         } else {
             checkForWinner()
         }
+        checkForBust()
+        checkForWinner()
+    }
+    
+    func DealerStand() {
+        yourTurn = true
     }
     
 }
@@ -407,6 +427,6 @@ struct ContentView: View {
 
 //struct ContentView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        ContentView(gotNewDeck: .constant(true), deck_id: .constant(<#T##value: String##String#>))
+//        ContentView(gotNewDeck: .constant(true), deck_id: .constant())
 //    }
 //}
