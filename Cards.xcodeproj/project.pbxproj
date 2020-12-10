@@ -62,8 +62,8 @@
 		D9EBF2DB257555B900B1170C /* Cards */ = {
 			isa = PBXGroup;
 			children = (
-				D9FB4F89258266F50060038A /* MainMenuView.swift */,
 				D9EBF2DC257555B900B1170C /* CardsApp.swift */,
+				D9FB4F89258266F50060038A /* MainMenuView.swift */,
 				D9EBF2DE257555B900B1170C /* ContentView.swift */,
 				D9EBF2E0257555BC00B1170C /* Assets.xcassets */,
 				D9EBF2E5257555BC00B1170C /* Info.plist */,

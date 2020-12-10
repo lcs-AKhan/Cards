@@ -12,9 +12,9 @@ struct ContentView: View {
     @State private var yourStatus = ""
     @State private var dealerStatus = ""
     
-    @State private var gotNewDeck = false
+    @Binding var gotNewDeck: Bool
+    @Binding var deck_id: String
     
-    @State private var deck_id = ""
     @State private var cardImages = [RetrievedCard]()
     @State var cardImage = UIImage()
     
@@ -405,8 +405,8 @@ struct ContentView: View {
 }
 
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView(gotNewDeck: .constant(true), deck_id: .constant(<#T##value: String##String#>))
+//    }
+//}
