@@ -15,6 +15,7 @@
 		D9EBF2DF257555B900B1170C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EBF2DE257555B900B1170C /* ContentView.swift */; };
 		D9EBF2E1257555BC00B1170C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9EBF2E0257555BC00B1170C /* Assets.xcassets */; };
 		D9EBF2E4257555BC00B1170C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9EBF2E3257555BC00B1170C /* Preview Assets.xcassets */; };
+		D9FB4F8A258266F50060038A /* MainMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9FB4F89258266F50060038A /* MainMenuView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		D9EBF2E0257555BC00B1170C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D9EBF2E3257555BC00B1170C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D9EBF2E5257555BC00B1170C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D9FB4F89258266F50060038A /* MainMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 		D9EBF2DB257555B900B1170C /* Cards */ = {
 			isa = PBXGroup;
 			children = (
+				D9FB4F89258266F50060038A /* MainMenuView.swift */,
 				D9EBF2DC257555B900B1170C /* CardsApp.swift */,
 				D9EBF2DE257555B900B1170C /* ContentView.swift */,
 				D9EBF2E0257555BC00B1170C /* Assets.xcassets */,
@@ -151,6 +154,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9EBF2DF257555B900B1170C /* ContentView.swift in Sources */,
+				D9FB4F8A258266F50060038A /* MainMenuView.swift in Sources */,
 				D96DDB9D25792E6700906CEB /* DeckOfCardsView.swift in Sources */,
 				D963CC422580127C000A498C /* DealtCardsDealerView.swift in Sources */,
 				D963CC3F25800F47000A498C /* DealtCardsView.swift in Sources */,
