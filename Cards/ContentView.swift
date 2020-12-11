@@ -253,7 +253,9 @@ struct ContentView: View {
     
     func drawCardBot() {
         checkForBust()
-        checkForWinner()
+        if dealerHandValue < 22 {
+            checkForWinner()
+        }
         
         if gameEnded == false {
             // 1. Prepare a URLRequest to send our encoded data as JSON
@@ -290,7 +292,9 @@ struct ContentView: View {
                     print("Invalid response from server.")
                 }
                 checkForBust()
-                checkForWinner()
+                if dealerHandValue < 22 {
+                    checkForWinner()
+                }
             }.resume()
         }
     }
@@ -369,7 +373,7 @@ struct ContentView: View {
             gameEnded = true
         } else if playerHandValue <= 17 {
             yourStatus = "Your Turn"
-        } else {
+        } else if dealerHandValue <= 17 {
             dealerStatus = "Dealer's Turn"
         }
     }
@@ -388,6 +392,7 @@ struct ContentView: View {
                 } else {
                     yourStatus = "Tie"
                     dealerStatus = "Tie"
+                    gameEnded = true
                 }
             }
         }
@@ -412,7 +417,10 @@ struct ContentView: View {
         if dealerHandValue < 18 {
             drawCardBot()
         } else {
-            checkForWinner()
+            checkForBust()
+            if dealerHandValue < 22 {
+                checkForWinner()
+            }
         }
         checkForBust()
         checkForWinner()
