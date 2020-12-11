@@ -25,11 +25,10 @@ struct MainMenuView: View {
                 
                 VStack {
                     
-                    Text("Black Jack!")
-                        .font(.largeTitle)
-                        .fontWeight(.regular)
-                        .multilineTextAlignment(.center)
-                    
+                    Image("blackjack")
+                        .resizable()
+                        .padding(.bottom)
+                        .scaledToFit()
 
                     NavigationLink(destination: ContentView(gotNewDeck: $gotNewDeck, deck_id: $deck_id), isActive: $playAGame) {
                         Button(action: {

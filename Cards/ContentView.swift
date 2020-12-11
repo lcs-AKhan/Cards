@@ -9,38 +9,54 @@ import SwiftUI
 
 struct ContentView: View {
     
+    // Status
     @State private var yourStatus = ""
     @State private var dealerStatus = ""
     
+    // Deck
     @Binding var gotNewDeck: Bool
     @Binding var deck_id: String
     
+    // Cards
     @State private var cardImages = [RetrievedCard]()
     @State var cardImage = UIImage()
     
+    // Hands
     @State private var cardImagesBot = [RetrievedCardBot]()
     @State private var cardImageBot = UIImage()
     
+    // Hand Values
     @State private var dealerHandValue: Int = 0
     @State private var playerHandValue: Int = 0
     
+    // Turns
     @State private var yourTurn: Bool = true
     
     @State private var playerStands = false
     
+    // Game status
     @State private var gameEnded = false
+    @State private var gameStarted = false
     
     var body: some View {
         
         NavigationView {
             
             ZStack {
-                LinearGradient(gradient: Gradient(colors: [.green, .white, .green]), startPoint: .top, endPoint: .bottom)
+                Image("blackjack_background")
+                    .resizable()
+                    .frame(width: 425, height: 900, alignment: .center)
                     .edgesIgnoringSafeArea(.all)
                 
                 VStack {
                     
                     // Display the cards info for both dealer and player
+                    
+                    if gameStarted == false {
+                        Image("CardBack")
+                            .resizable()
+                            .frame(width: 90, height: 135)
+                    }
                     
                     Text("Dealer's hand value is \(dealerHandValue)")
                     
@@ -58,6 +74,12 @@ struct ContentView: View {
                         
                     DealtCardsView(cardImages: cardImages)
                             
+                    if gameStarted == false {
+                        Image("CardBack")
+                            .resizable()
+                            .frame(width: 90, height: 135)
+                    }
+                    
                     // Buttons for standing and hitting
                     
                     if gameEnded == false {
@@ -68,6 +90,7 @@ struct ContentView: View {
                                 }) {
                                     Image("button_stand")
                                         .resizable()
+                                        .padding(.horizontal)
                                         .scaledToFit()
                                 }
                             } else {
@@ -76,6 +99,7 @@ struct ContentView: View {
                                 }) {
                                     Image("button_hit")
                                         .resizable()
+                                        .padding(.horizontal)
                                         .scaledToFit()
                                 }
                                 Button(action: {
@@ -83,6 +107,7 @@ struct ContentView: View {
                                 }) {
                                     Image("button_stand")
                                         .resizable()
+                                        .padding(.horizontal)
                                         .scaledToFit()
                                 }
                             }
@@ -160,6 +185,7 @@ struct ContentView: View {
     }
 
     func drawCard() {
+        gameStarted = true
         checkForBust()
         checkForWinner()
         if gameEnded == false {
@@ -202,13 +228,13 @@ struct ContentView: View {
                         drawCardBot()
                     } else {
                         DealerStand()
+                        checkForBust()
                     }
                 } else {
                     checkForBust()
                 }
-                checkForBust()
+                checkForWinner()
             }.resume()
-            checkForWinner()
         }
     }
     
@@ -253,6 +279,7 @@ struct ContentView: View {
     
     func drawCardBot() {
         checkForBust()
+        
         if dealerHandValue < 22 {
             checkForWinner()
         }
@@ -371,15 +398,15 @@ struct ContentView: View {
             yourStatus = "You Busted!"
             dealerStatus = "You Busted!"
             gameEnded = true
-        } else if playerHandValue <= 17 {
+        } else if playerHandValue <= 21 {
             yourStatus = "Your Turn"
-        } else if dealerHandValue <= 17 {
+        } else if dealerHandValue <= 21 {
             dealerStatus = "Dealer's Turn"
         }
     }
     
     func checkForWinner() {
-        if dealerHandValue > 14 {
+        if dealerHandValue > 17 {
             if playerStands {
                 if (21 - dealerHandValue) < ( 21 - playerHandValue) {
                     dealerStatus = "Dealer Wins!"
@@ -412,16 +439,21 @@ struct ContentView: View {
     }
     
     func Stand() {
-        yourTurn = false
-        playerStands = true
-        if dealerHandValue < 18 {
+        checkForBust()
+        checkForWinner()
+        if dealerHandValue < 17 {
             drawCardBot()
-        } else {
             checkForBust()
-            if dealerHandValue < 22 {
+            if dealerHandValue >= 17 {
                 checkForWinner()
             }
         }
+        if playerHandValue > 21 {
+            gameEnded = true
+            yourStatus = "You Busted!"
+        }
+        yourTurn = false
+        playerStands = true
         checkForBust()
         checkForWinner()
     }
@@ -431,7 +463,6 @@ struct ContentView: View {
     }
     
 }
-
 
 //struct ContentView_Previews: PreviewProvider {
 //    static var previews: some View {
