@@ -436,15 +436,17 @@ struct ContentView: View {
         yourStatus = ""
         dealerStatus = ""
         playerStands = false
+        gameStarted = false
     }
     
     func Stand() {
+        gameStarted = true
         checkForBust()
         checkForWinner()
         if dealerHandValue < 17 {
             drawCardBot()
             checkForBust()
-            if dealerHandValue >= 17 {
+            if dealerHandValue >= 17, dealerHandValue < 22 {
                 checkForWinner()
             }
         }
@@ -455,7 +457,6 @@ struct ContentView: View {
         yourTurn = false
         playerStands = true
         checkForBust()
-        checkForWinner()
     }
     
     func DealerStand() {
