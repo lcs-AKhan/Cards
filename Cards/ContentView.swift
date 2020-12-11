@@ -52,28 +52,34 @@ struct ContentView: View {
                     
                     // Display the cards info for both dealer and player
                     
+                    Text("Dealer's hand value is \(dealerHandValue)")
+                        .font(.subheadline)
+                        .fontWeight(.heavy)
+                    
                     if gameStarted == false {
                         Image("CardBack")
                             .resizable()
                             .frame(width: 90, height: 135)
                     }
                     
-                    Text("Dealer's hand value is \(dealerHandValue)")
-                    
                     DealtCardsDealerView(cardImagesBot: cardImagesBot)
                     
                     if yourTurn {
                         
                         Text("\(yourStatus)")
+                            .font(.subheadline)
+                            .fontWeight(.heavy)
                         
                     } else {
                         
                         Text("\(dealerStatus)")
+                            .font(.subheadline)
+                            .fontWeight(.heavy)
                         
                     }
                         
                     DealtCardsView(cardImages: cardImages)
-                            
+
                     if gameStarted == false {
                         Image("CardBack")
                             .resizable()
@@ -81,6 +87,10 @@ struct ContentView: View {
                     }
                     
                     // Buttons for standing and hitting
+                    
+                    Text("Your hand value is \(playerHandValue)")
+                        .font(.subheadline)
+                        .fontWeight(.bold)
                     
                     if gameEnded == false {
                         HStack {
@@ -113,8 +123,6 @@ struct ContentView: View {
                             }
                         }
                     }
-                    
-                        Text("Your hand value is \(playerHandValue)")
                     
                         // Buttons for playing a game
                     
@@ -391,12 +399,12 @@ struct ContentView: View {
     
     func checkForBust() {
         if dealerHandValue > 21 {
-            dealerStatus = "Dealer Busted!"
+            dealerStatus = "Dealer Busted First!"
             yourStatus = "Dealer Busted!"
             gameEnded = true
         } else if playerHandValue > 21 {
-            yourStatus = "You Busted!"
-            dealerStatus = "You Busted!"
+            yourStatus = "You Busted First!"
+            dealerStatus = "You Busted First!"
             gameEnded = true
         } else if playerHandValue <= 21 {
             yourStatus = "Your Turn"
@@ -452,7 +460,7 @@ struct ContentView: View {
         }
         if playerHandValue > 21 {
             gameEnded = true
-            yourStatus = "You Busted!"
+            yourStatus = "You Busted First!"
         }
         yourTurn = false
         playerStands = true
