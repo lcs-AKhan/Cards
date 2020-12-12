@@ -20,12 +20,14 @@ struct MainMenuView: View {
         NavigationView() {
             
             ZStack {
-                LinearGradient(gradient: Gradient(colors: [.green, .white, .green]), startPoint: .top, endPoint: .bottom)
+                Image("menuBackground")
+                    .resizable()
+                    .frame(width: 425, height: 900)
                     .edgesIgnoringSafeArea(.all)
                 
                 VStack {
                     
-                    Image("blackjack")
+                    Image("BlackJackTitle")
                         .resizable()
                         .padding(.bottom)
                         .scaledToFit()
@@ -36,6 +38,7 @@ struct MainMenuView: View {
                         }) {
                             Image("button_play-blackjack")
                                 .resizable()
+                                .padding(.horizontal)
                                 .scaledToFit()
                         }
                     }

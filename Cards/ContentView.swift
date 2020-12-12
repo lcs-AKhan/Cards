@@ -67,13 +67,13 @@ struct ContentView: View {
                     if yourTurn {
                         
                         Text("\(yourStatus)")
-                            .font(.subheadline)
+                            .font(.headline)
                             .fontWeight(.heavy)
                         
                     } else {
                         
                         Text("\(dealerStatus)")
-                            .font(.subheadline)
+                            .font(.headline)
                             .fontWeight(.heavy)
                         
                     }
@@ -85,12 +85,12 @@ struct ContentView: View {
                             .resizable()
                             .frame(width: 90, height: 135)
                     }
-                    
-                    // Buttons for standing and hitting
-                    
+                                    
                     Text("Your hand value is \(playerHandValue)")
                         .font(.subheadline)
-                        .fontWeight(.bold)
+                        .fontWeight(.heavy)
+                    
+                    // Buttons for standing and hitting
                     
                     if gameEnded == false {
                         HStack {
@@ -142,6 +142,7 @@ struct ContentView: View {
                             }) {
                                 Image("button_play-again")
                                     .resizable()
+                                    .padding(.horizontal)
                                     .scaledToFit()
                             }
                         }
@@ -150,7 +151,7 @@ struct ContentView: View {
             }
         }
     
-    // functions
+    // Functions
     
     func fetchDeck() {
         
@@ -373,30 +374,38 @@ struct ContentView: View {
         
     }
     
+    // For finding the value of a card which doesn't have a number on it
     func findValuePlayer(value: String) {
-        if value == "KING" {
+        switch value {
+        case "KING":
             playerHandValue += 10
-        } else if value == "QUEEN" {
+        case "QUEEN":
             playerHandValue += 10
-        } else if value == "JACK" {
+        case "JACK":
             playerHandValue += 10
-        } else if value == "ACE" {
-            playerHandValue += 11
+        case "ACE":
+            playerHandValue += 10
+        default:
+            playerHandValue += 0
         }
      }
     
     func findValueDealer(value2: String) {
-        if value2 == "KING" {
+        switch value2 {
+        case "KING":
             dealerHandValue += 10
-        } else if value2 == "QUEEN" {
+        case "QUEEN":
             dealerHandValue += 10
-        } else if value2 == "JACK" {
+        case "JACK":
             dealerHandValue += 10
-        } else if value2 == "ACE" {
-            dealerHandValue += 11
+        case "ACE":
+            dealerHandValue += 10
+        default:
+            dealerHandValue += 0
         }
     }
     
+    // Checking for events causing the game to end
     func checkForBust() {
         if dealerHandValue > 21 {
             dealerStatus = "Dealer Busted First!"
@@ -406,15 +415,15 @@ struct ContentView: View {
             yourStatus = "You Busted First!"
             dealerStatus = "You Busted First!"
             gameEnded = true
-        } else if playerHandValue <= 21 {
+        } else if yourTurn {
             yourStatus = "Your Turn"
-        } else if dealerHandValue <= 21 {
+        } else if yourTurn == false {
             dealerStatus = "Dealer's Turn"
         }
     }
     
     func checkForWinner() {
-        if dealerHandValue > 17 {
+        if dealerHandValue >= 17 {
             if playerStands {
                 if (21 - dealerHandValue) < ( 21 - playerHandValue) {
                     dealerStatus = "Dealer Wins!"
@@ -462,13 +471,14 @@ struct ContentView: View {
             gameEnded = true
             yourStatus = "You Busted First!"
         }
+        checkForBust()
         yourTurn = false
         playerStands = true
-        checkForBust()
     }
     
     func DealerStand() {
         yourTurn = true
+        checkForBust()
     }
     
 }
